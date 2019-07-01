@@ -1,0 +1,12 @@
+{{ define "content" }}                                                                                              
+<form method="POST">                                                                                                
+    Email: <input type="text" name="email">                                                                         
+    Password: <input type="password" name="password">                                                               
+    <select name="role" id="sr">                                                                                    
+        <option value="user">user</option>                                                                          
+        <option value="admin">admin</option>                                                                        
+        <option value="superuser">superuser</option>                                                                
+    </select>                                                                                                       
+    <button type="submit">Go!</button>                                                                              
+</form>                                                                                                             
+{{ end }} 

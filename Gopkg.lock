@@ -2,20 +2,14 @@
 
 
 [[projects]]
-  name = "github.com/joho/godotenv"
-  packages = ["."]
-  revision = "23d116af351c84513e1946b527c88823e476be13"
-  version = "v1.3.0"
-
-[[projects]]
-  name = "github.com/thegorgeouslang/logit"
-  packages = ["."]
-  revision = "ca0249ede88eeb3c2b94dcd17f9666b594c67077"
-  version = "v1.2.3"
+  branch = "master"
+  name = "golang.org/x/crypto"
+  packages = ["bcrypt","blowfish"]
+  revision = "4def268fd1a49955bfb3dda92fe3db4f924f2285"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "534e9ebd298dbf022e0281e3199b52bf3a9cf661c51d291791bb1da057411b3b"
+  inputs-digest = "e06883c16b4a0831914749ece8580675707c7c89038e2f6248a12c8630214b41"
   solver-name = "gps-cdcl"
   solver-version = 1

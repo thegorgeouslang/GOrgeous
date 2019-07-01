@@ -7,6 +7,8 @@ import (
 
 func main() {
 	LoadRoutes()
+	LoadAuthRoutes()
+	LoadAdminRoutes()
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
 	http.Handle("/libs/", http.StripPrefix("/libs/", http.FileServer(http.Dir("node_modules"))))

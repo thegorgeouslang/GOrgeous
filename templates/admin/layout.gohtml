@@ -1,0 +1,123 @@
+{{ define "layout" }} 
+
+ <!doctype html>
+ <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="James Mallon">
+        <meta name="contact" content="thegorgeouslang@gmail.com">
+        <meta name="reply-to" content="thegorgeouslang@gmail.com">
+        <meta name="copyright" content="MIT">
+        <meta name="keywords" content="James Mallon,HTML,CSS,XML,JavaScript,PHP7.2,PHP,Laravel,Laravel 5.7,SASS,Bootstrap,jQuery,jQuery-UI,ReactJs,React-js,React">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/dashboard.css" />
+        <!-- javascript -->
+        <script type="text/javascript" src="/libs/jquery/dist/jquery.slim.min.js"></script>
+        <script type="text/javascript" src="/libs/popper.js/dist/popper.min.js"></script>
+        <script type="text/javascript" src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <title>{{ .PageTitle }}</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+   </head>
+   <body>
+      <div id="app">
+         <!-- -->
+         <!-- navbar -->
+         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+           <div class="container">
+              <a class="navbar-brand" href="/">
+              </a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <!-- Left Side Of Navbar -->
+                 <ul class="navbar-nav mr-auto">
+                 </ul>
+                 <!-- Right Side Of Navbar -->
+                 <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    <li class="nav-item dropdown" >
+                       <a id="navbarDropdown2" class="nav-link dropdown-toggle" @click="transactionsClick" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                           <i class="fas fa-bell notifications-icon"></i>
+                           <span class="badge badge-primary badge-pill" id="unread_notifs">10</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1" id="dropd_transactions">
+                           <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="">See all transactions</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                       <a id="navbarDropdown2" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       <i class="fas fa-user notifications-icon"></i>
+                       <span class="caret"></span>
+                       </a>
+                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown2">
+                           <a class="dropdown-item" href="">Transfer</a>
+                           <a class="dropdown-item" href="">Transactions</a>
+                           <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href=""
+                             onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
+                          </a>
+                          <form id="logout-form" action="logout/" method="POST" style="display: none;">
+                          </form>
+                       </div>
+                    </li>
+                 </ul>
+              </div>
+           </div>
+        </nav>
+         <!-- Content -->
+         <div class="content">
+            <div class="title">
+               <h3 class="mt-5">
+                  You total amount is: <span id="userAmount">150.000.000,00</span>
+               </h3>
+            </div>
+          {{ template "content" .}}
+         </div>
+         <!-- end of app -->
+         <div class="footer mt-5">
+        <div class="container">
+            <h3 class="text-center">
+                <a href="https://www.linkedin.com/in/thiago-mallon/" data-social="linkedin" class="text-primary" target="_blank">
+                    <i class="fab fa-linkedin text-primary"></i>
+                </a>
+                <a href="https://github.com/jamesmallon" data-social="github" class="text-dark" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://plus.google.com/u/0/115970027515273968388?tab=mX" data-social="google" class="text-danger" target="_blank">
+                    <i class="fab fa-google-plus-g text-danger"></i>
+                </a>
+            </h3>
+        </div>
+    </div>
+      </div>
+      <!-- layout modal -->
+      <div class="modal fade" id="layoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="layoutModalTitle"></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <ul id="layoutModalBody">
+                  </ul>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- modal end -->
+   </body>
+</html>
+
+ {{ end }}

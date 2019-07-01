@@ -14,8 +14,8 @@ type LayoutHelper struct{}
 // Renderer method -
 func (this *LayoutHelper) Render(res http.ResponseWriter, layout string, pageData interface{}, views ...string) {
 	tpl := template.Must(template.ParseFiles(views...))
-	err := tpl.ExecuteTemplate(res, layout, pageData)
-	if err != nil {
-		log.It.WriteLog("error", err.Error(), log.It.GetTraceMsg())
+	e := tpl.ExecuteTemplate(res, layout, pageData)
+	if e != nil {
+		log.Write("Error", e.Error(), log.Trace())
 	}
 }
