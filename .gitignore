@@ -4,9 +4,23 @@
 *.dll
 *.so
 *.dylib
+main
 
 # Test binary, build with `go test -c`
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Backup files
+*.bkp
+*.go.bkp
+
+# environment file
+.env
+
+# node dependencies
+node_modules/
+
+# golang dependencies
+vendor/
