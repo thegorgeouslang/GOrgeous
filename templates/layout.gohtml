@@ -1,0 +1,97 @@
+{{ define "layout" }} 
+
+ <!doctype html>
+<html lang="en">
+    <head>
+        <!-- meta tags -->
+        <meta charset="utf-8">
+        <meta name="author" content="James Mallon">
+        <meta name="contact" content="thegorgeouslang@gmail.com">
+        <meta name="reply-to" content="thegorgeouslang@gmail.com">
+        <meta name="copyright" content="MIT">
+        <meta name="keywords" content="James Mallon,HTML,CSS,XML,JavaScript,PHP7.2,PHP,Laravel,Laravel 5.7,SASS,Bootstrap,jQuery,jQuery-UI,ReactJs,React-js,React">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- stylesheet -->
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+        <link rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/front.css">
+        <!-- javascript -->
+        <script type="text/javascript" src="/libs/jquery/dist/jquery.slim.min.js"></script>
+        <script type="text/javascript" src="/libs/popper.js/dist/popper.min.js"></script>
+        <script type="text/javascript" src="/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <!-- favicon -->
+        <link rel="icon" type="image/png" href="/static/images/favicon.png">
+        <title>{{ .PageTitle }}</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- navbar -->
+            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav mr-auto">
+
+                        </ul>
+
+                        <!-- Right Side Of Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Authentication Links -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="/login">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                    <a class="nav-link" href="/signup">Signup</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Title container -->
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="title text-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                {{ template "content" .}}
+            </div>
+            <div>
+                {{ if .FlashMessage  }}
+                <span>{{ .FlashMessage }}</span>
+                {{ end }}
+            </div>
+
+            <div class="footer mt-5">
+                <div class="container">
+                    <h3 class="text-center">
+                        <a href="https://www.linkedin.com/in/thiago-mallon/" data-social="linkedin" class="text-primary" target="_blank">
+                            <i class="fab fa-linkedin text-primary"></i>
+                        </a>
+                        <a href="https://github.com/jamesmallon" data-social="github" class="text-dark" target="_blank">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://plus.google.com/u/0/115970027515273968388?tab=mX" data-social="google" class="text-danger" target="_blank">
+                            <i class="fab fa-google-plus-g text-danger"></i>
+                        </a>
+                    </h3>
+                </div>
+            </div>
+        </div>        
+
+    </body>
+</html>
+
+ {{ end }}

@@ -1,9 +1,15 @@
 package main
 
 import (
-	"fmt"
+	. "GoAuthentication/routers"
+	"net/http"
 )
 
 func main() {
-	fmt.Println("Is it a sunny day? Go burn in the sun!")
+	LoadRoutes()
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("public"))))
+	http.Handle("/libs/", http.StripPrefix("/libs/", http.FileServer(http.Dir("node_modules"))))
+	http.Handle("/favicon.ico", http.NotFoundHandler())
+	panic(http.ListenAndServe(":8080", nil))
 }
