@@ -4,8 +4,8 @@ package controllers
 
 import (
 	. "GoAuthentication/libs/layout"
-	//. "GoAuthentication/models/dao"
-	//"fmt"
+	. "GoAuthentication/libs/session"
+	. "GoAuthentication/models/dao"
 	"net/http"
 )
 
@@ -21,8 +21,22 @@ func AdminController() *adminController {
 
 // Index method -
 func (this *adminController) Index(w http.ResponseWriter, r *http.Request) {
-	//fmt.Println(UserDAO.GetUsers())
+	user := SessionHelper().User(w, r)
 	this.layout.Render(w,
-		map[string]interface{}{"PageTitle": "Index"},
+		map[string]interface{}{
+			"PageTitle": "Dashboard",
+			"User":      user,
+		},
 		"templates/admin/layout.gohtml", "templates/admin/index.gohtml")
+}
+
+// Index method -
+func (this *adminController) Users(w http.ResponseWriter, r *http.Request) {
+	users := UserDAO.GetUsers()
+	this.layout.Render(w,
+		map[string]interface{}{
+			"PageTitle": "Dashboard Users",
+			"Users":     users,
+		},
+		"templates/admin/layout.gohtml", "templates/admin/users.gohtml")
 }

@@ -6,71 +6,76 @@ import (
 	conf "GoAuthentication/configs"
 	. "GoAuthentication/models"
 	. "GoAuthentication/models/dao"
-	"fmt"
 	"github.com/satori/go.uuid"
 	"net/http"
 	"strconv"
-	"time"
-)
-
-var (
-	sessCookie *http.Cookie
-	sessExp    int
 )
 
 // Struct type session -
-type sessionHelper struct{}
+type sessionHelper struct {
+	sessExp int
+}
 
 // init function - data and process initialization
 func SessionHelper() *sessionHelper {
-	sessExp, _ = strconv.Atoi(conf.Env["session_exp"])
-	return &sessionHelper{}
+	se, _ := strconv.Atoi(conf.Env["session_exp"])
+	return &sessionHelper{se}
 }
 
 // GetSession method -
 func (this *sessionHelper) Start(w http.ResponseWriter, r *http.Request) string {
-	var err error
-	sessCookie, err = r.Cookie("session") // create the cookie
-	if err != nil {
+	c, e := r.Cookie("session") // create the cookie
+	if e != nil {
 		sID := uuid.NewV4() // create the universal unique id
-		sessCookie = &http.Cookie{
+		c = &http.Cookie{
 			Name:  "session",
 			Value: sID.String(),
 		}
 	}
-	sessCookie.MaxAge = sessExp
-	http.SetCookie(w, sessCookie)
-	return sessCookie.Value
+	c.MaxAge = this.sessExp
+	http.SetCookie(w, c)
+	return c.Value
+}
+
+// Get method -
+func (this *sessionHelper) GetSession(w http.ResponseWriter, r *http.Request) (e error) {
+	c, e := r.Cookie("session") // create the cookie
+	if e != nil {
+		return
+	}
+	session := SessionDAO.GetSession(c.Value)
+	if session.Email != "" {
+		SessionDAO.Renew(c.Value)
+	}
+	// refresh session
+	c.MaxAge = this.sessExp
+	http.SetCookie(w, c)
+	return
 }
 
 //
-func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) User {
-	sessCookie.MaxAge = sessExp
-	http.SetCookie(w, sessCookie)
+func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) (user User) {
+	c, e := r.Cookie("session") // create the cookie
+	if e == nil {
+		c.MaxAge = this.sessExp
+		http.SetCookie(w, c)
 
-	var user User
-	// if the user exists already, get user
-	session := SessionDAO.GetSession(sessCookie.Value) // retrieve the session
-	if session.UserId > 0 {                            // check for the user id
-		SessionDAO.Renew(sessCookie.Value)     // update LastActivity
-		user = UserDAO.GetUser(session.UserId) // retrieve user
+		// if the user exists already, get user
+		session := SessionDAO.GetSession(c.Value) // retrieve the session
+		if session.UserId > 0 {                   // check for the user id
+			SessionDAO.Renew(c.Value)              // update LastActivity
+			user = UserDAO.GetUser(session.UserId) // retrieve user
+			return
+		}
 	}
-	return user
+	return
 }
 
 // CloseSession method -
 func (this *sessionHelper) Close(w http.ResponseWriter, r *http.Request) {
-	sessCookie.MaxAge = -1
-	http.SetCookie(w, sessCookie)
-}
-
-func (s *sessionHelper) CleanSessions() {
-	fmt.Println("BEFORE CLEAN") // for demonstration purposes
-	sessions := SessionDAO.GetSessions()
-	for k, v := range sessions {
-		if time.Now().Sub(v.LastActivity) > (time.Second * 30) {
-			SessionDAO.Delete(k)
-		}
+	c, err := r.Cookie("session") // create the cookie
+	if err == nil {
+		c.MaxAge = -1
+		http.SetCookie(w, c)
 	}
-	fmt.Println("AFTER CLEAN") // for demonstration purposes
 }

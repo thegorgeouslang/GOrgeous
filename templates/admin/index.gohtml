@@ -1,3 +1,8 @@
-{{ define "content" }}
-<h1> You're in the Dashboard </h1>
-{{ end }}
+{{define "content"}}
+    <h1> You're in the Dashboard </h1>
+    {{if .User.Email}}
+    USER NAME {{.User.Email}}<br>
+    PASSWORD {{.User.Password}}<br>
+    <h2><a href="/logout">log out</a></h2>
+    {{end}}
+{{end}}

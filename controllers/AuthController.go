@@ -7,7 +7,6 @@ import (
 	. "GoAuthentication/libs/session"
 	. "GoAuthentication/models"
 	. "GoAuthentication/models/dao"
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
@@ -87,8 +86,6 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 	// store session
 	SessionDAO.Insert(sid, &Session{user.Id, user.Email, time.Now()})
 
-	fmt.Println(SessionDAO.GetSessions())
-	fmt.Println(UserDAO.GetUsers())
 	// redirect
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 	return
@@ -96,5 +93,6 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 
 // Login method -
 func (this *authController) Logout(w http.ResponseWriter, r *http.Request) {
-
+	SessionHelper().Close(w, r)
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

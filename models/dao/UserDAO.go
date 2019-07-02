@@ -18,6 +18,7 @@ var UserTbl []User
 // init function - data and process initialization
 func init() {
 	UserDAO = &userDAO{}
+	UserTbl = append(UserTbl, User{})
 }
 
 // Insert method -
@@ -26,8 +27,8 @@ func (this *userDAO) Insert(user *User) (e error) {
 		e = errors.New("User already exists in our database")
 		return
 	}
-	user.Id = (len(UserTbl) + 1)     // get array length
-	UserTbl = append(UserTbl, *user) // append a new user to the array (fake db table)
+	user.Id = len(UserTbl)
+	UserTbl = append(UserTbl, *user)
 	return
 }
 
