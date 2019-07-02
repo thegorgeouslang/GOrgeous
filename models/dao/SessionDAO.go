@@ -3,7 +3,7 @@
 package dao
 
 import (
-	. "GoAuthentication/models"
+	. "GoAuthorization/models"
 	"time"
 )
 

@@ -3,7 +3,7 @@
 package middlewares
 
 import (
-	. "GoAuthentication/libs/session"
+	. "GoAuthorization/libs/session"
 	"net/http"
 )
 

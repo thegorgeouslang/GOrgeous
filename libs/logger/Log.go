@@ -3,7 +3,7 @@
 package logger
 
 import (
-	conf "GoAuthentication/configs"
+	conf "GoAuthorization/configs"
 	"fmt"
 	"log"
 	"os"

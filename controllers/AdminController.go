@@ -3,9 +3,9 @@
 package controllers
 
 import (
-	. "GoAuthentication/libs/layout"
-	. "GoAuthentication/libs/session"
-	. "GoAuthentication/models/dao"
+	. "GoAuthorization/libs/layout"
+	. "GoAuthorization/libs/session"
+	. "GoAuthorization/models/dao"
 	"net/http"
 )
 

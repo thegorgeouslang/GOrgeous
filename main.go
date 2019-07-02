@@ -1,9 +1,16 @@
 package main
 
 import (
-	. "GoAuthentication/routers"
+	. "GoAuthorization/libs/databases"
+	. "GoAuthorization/routers"
 	"net/http"
 )
+
+// init function - data and process initialization
+func init() {
+	// automaticaly creates the tables, if non existent
+	DbConn.Migrate(&UserModel{}, &SessionModel{})
+}
 
 func main() {
 	LoadRoutes()

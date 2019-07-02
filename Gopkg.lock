@@ -2,10 +2,28 @@
 
 
 [[projects]]
+  name = "github.com/jinzhu/gorm"
+  packages = [".","dialects/postgres"]
+  revision = "836fb2c19d84dac7b0272958dfb9af7cf0d0ade4"
+  version = "v1.9.10"
+
+[[projects]]
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
+  version = "v1.0.0"
+
+[[projects]]
   name = "github.com/joho/godotenv"
   packages = ["."]
   revision = "23d116af351c84513e1946b527c88823e476be13"
   version = "v1.3.0"
+
+[[projects]]
+  name = "github.com/lib/pq"
+  packages = [".","hstore","oid","scram"]
+  revision = "bc6a3c0594130b1e34005880bc600b6d3f49fa7f"
+  version = "v1.1.1"
 
 [[projects]]
   name = "github.com/satori/go.uuid"
@@ -22,6 +40,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "442d02631f8bd12f15d34aec3b121dbb2f0a86db0f97a0b3db68ee8b5f0c1001"
+  inputs-digest = "6299e144aae5bec5428f74b273fba556d4b368a617784cb4f5e0ff22449449ed"
   solver-name = "gps-cdcl"
   solver-version = 1

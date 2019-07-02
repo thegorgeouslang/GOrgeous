@@ -1,4 +1,4 @@
-# GoAuthentication
+# GoAuthorization
 
 The project exemplifies using as few dependencies as possible. No database was used, but a simulation of one to store users for future login.
 

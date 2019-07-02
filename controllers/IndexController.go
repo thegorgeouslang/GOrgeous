@@ -3,7 +3,7 @@
 package controllers
 
 import (
-	. "GoAuthentication/libs/layout"
+	. "GoAuthorization/libs/layout"
 	"net/http"
 )
 

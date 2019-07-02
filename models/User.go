@@ -2,8 +2,12 @@
 // models package - contains the models of the app
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type User struct {
-	Id       int
+	gorm.Model
 	Email    string
 	Password []byte
 	Role     string

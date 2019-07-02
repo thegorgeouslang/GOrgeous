@@ -3,8 +3,8 @@
 package routers
 
 import (
-	. "GoAuthentication/controllers"
-	. "GoAuthentication/middlewares"
+	. "GoAuthorization/controllers"
+	. "GoAuthorization/middlewares"
 	"net/http"
 )
 

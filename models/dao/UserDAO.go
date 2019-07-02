@@ -3,7 +3,7 @@
 package dao
 
 import (
-	. "GoAuthentication/models"
+	. "GoAuthorization/models"
 	"errors"
 )
 
@@ -22,24 +22,15 @@ func init() {
 }
 
 // Insert method -
-func (this *userDAO) Insert(user *User) (e error) {
-	if this.CheckExists(user.Email) {
+func (this *userDAO) Create(user *User) (e error) {
+	udb := this.GetByEmail(user.Email)
+	if len(udb.Email) > 0 {
 		e = errors.New("User already exists in our database")
 		return
 	}
 	user.Id = len(UserTbl)
 	UserTbl = append(UserTbl, *user)
 	return
-}
-
-// CheckExistent method -
-func (this *userDAO) CheckExists(email string) bool {
-	for _, user := range UserTbl {
-		if user.Email == email {
-			return true
-		}
-	}
-	return false
 }
 
 // GetUser method -

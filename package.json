@@ -1,0 +1,19 @@
+{
+  "name": "SessionACL",
+  "version": "1.0.0",
+  "description": "A Golang App",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "Golang"
+  ],
+  "author": "James Mallon <jamesmallondev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0"
+  }
+}

@@ -3,7 +3,7 @@
 package layout
 
 import (
-	log "GoAuthentication/libs/logger"
+	log "GoAuthorization/libs/logger"
 	"html/template"
 	"net/http"
 )

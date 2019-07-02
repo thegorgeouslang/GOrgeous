@@ -3,10 +3,10 @@
 package controllers
 
 import (
-	. "GoAuthentication/libs/layout"
-	. "GoAuthentication/libs/session"
-	. "GoAuthentication/models"
-	. "GoAuthentication/models/dao"
+	. "GoAuthorization/libs/layout"
+	. "GoAuthorization/libs/session"
+	. "GoAuthorization/models"
+	. "GoAuthorization/models/dao"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
@@ -45,7 +45,7 @@ func (this *authController) signupProcess(w http.ResponseWriter, r *http.Request
 		Password: pass,
 		Role:     r.FormValue("role")}
 
-	if e := UserDAO.Insert(&user); e != nil { // check if email is unique
+	if e := UserDAO.Create(&user); e != nil { // check if email is unique
 		http.Error(w, e.Error(), http.StatusForbidden)
 		return
 	}
