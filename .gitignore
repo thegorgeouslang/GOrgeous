@@ -26,4 +26,4 @@ node_modules/
 vendor/
 
 # log files
-*.log
+#*.log
