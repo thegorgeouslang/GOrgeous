@@ -2,6 +2,18 @@
 
 
 [[projects]]
+  name = "github.com/joho/godotenv"
+  packages = ["."]
+  revision = "23d116af351c84513e1946b527c88823e476be13"
+  version = "v1.3.0"
+
+[[projects]]
+  name = "github.com/satori/go.uuid"
+  packages = ["."]
+  revision = "f58768cc1a7a7e77a3bd49e98cdd21419399b6a3"
+  version = "v1.2.0"
+
+[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish"]
@@ -10,6 +22,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "e06883c16b4a0831914749ece8580675707c7c89038e2f6248a12c8630214b41"
+  inputs-digest = "442d02631f8bd12f15d34aec3b121dbb2f0a86db0f97a0b3db68ee8b5f0c1001"
   solver-name = "gps-cdcl"
   solver-version = 1

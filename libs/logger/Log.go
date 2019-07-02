@@ -3,7 +3,7 @@
 package logger
 
 import (
-	"GoAuthentication/configs"
+	conf "GoAuthentication/configs"
 	"fmt"
 	"log"
 	"os"
@@ -16,9 +16,11 @@ var lg *log.Logger
 func init() {
 	// set location of log file
 	var logpath = fmt.Sprintf("%s%s%s",
-		configs.LOGFILE_PATH,            // logfile path
+		//configs.LOGFILE_PATH,            // logfile path
+		conf.Env["logfile_path"],
 		time.Now().Format("2006_01_02"), // logfile name
-		configs.LOGFILE_EXT)             // logfile extension
+		conf.Env["logfile_ext"])
+	//configs.LOGFILE_EXT)             // logfile extension
 
 	var file, e = os.OpenFile(logpath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 1444)
 

@@ -8,13 +8,19 @@ import (
 	"net/http"
 )
 
-// Struct type layoutController - offer DRY solutions to common controllers actions
-type LayoutHelper struct{}
+// Struct type layoutHelper - offer DRY solutions to common controllers actions
+type LayoutHelper struct {
+	ViewHelper
+	PageData map[string]interface{}
+}
 
-// Renderer method -
-func (this *LayoutHelper) Render(res http.ResponseWriter, layout string, pageData interface{}, views ...string) {
-	tpl := template.Must(template.ParseFiles(views...))
-	e := tpl.ExecuteTemplate(res, layout, pageData)
+// Render method -
+func (this *LayoutHelper) Render(w http.ResponseWriter, pageData interface{}, views ...string) {
+	tpl, e := template.New("layout").
+		Funcs(template.FuncMap{
+			"fdate": this.FormatDate}).
+		ParseFiles(views...)
+	e = tpl.Execute(w, pageData)
 	if e != nil {
 		log.Write("Error", e.Error(), log.Trace())
 	}

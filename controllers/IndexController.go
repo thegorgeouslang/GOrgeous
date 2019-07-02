@@ -20,7 +20,6 @@ func IndexController() *indexController {
 // Index method -
 func (this *indexController) Index(w http.ResponseWriter, r *http.Request) {
 	this.layout.Render(w,
-		"layout",
-		struct{ PageTitle string }{"Index"},
+		map[string]interface{}{"PageTitle": "Index"},
 		"templates/layout.gohtml", "templates/index/index.gohtml")
 }

@@ -4,6 +4,7 @@ package dao
 
 import (
 	. "GoAuthentication/models"
+	"errors"
 )
 
 // Struct type userDAO -
@@ -20,14 +21,18 @@ func init() {
 }
 
 // Insert method -
-func (this *userDAO) Insert(user *User) bool {
-	user.Id = len(UserTbl)           // get array length
+func (this *userDAO) Insert(user *User) (e error) {
+	if this.CheckExists(user.Email) {
+		e = errors.New("User already exists in our database")
+		return
+	}
+	user.Id = (len(UserTbl) + 1)     // get array length
 	UserTbl = append(UserTbl, *user) // append a new user to the array (fake db table)
-	return true
+	return
 }
 
 // CheckExistent method -
-func (this *userDAO) CheckExists(user *User, email string) bool {
+func (this *userDAO) CheckExists(email string) bool {
 	for _, user := range UserTbl {
 		if user.Email == email {
 			return true
@@ -44,4 +49,14 @@ func (this *userDAO) GetUser(id int) User {
 // GetUsers method -
 func (this *userDAO) GetUsers() []User {
 	return UserTbl
+}
+
+// GetPassByEmail method -
+func (this *userDAO) GetByEmail(email string) User {
+	for _, user := range UserTbl {
+		if user.Email == email {
+			return user
+		}
+	}
+	return User{}
 }

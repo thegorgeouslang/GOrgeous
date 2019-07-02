@@ -4,8 +4,8 @@ package controllers
 
 import (
 	. "GoAuthentication/libs/layout"
-	. "GoAuthentication/models/dao"
-	"fmt"
+	//. "GoAuthentication/models/dao"
+	//"fmt"
 	"net/http"
 )
 
@@ -21,9 +21,8 @@ func AdminController() *adminController {
 
 // Index method -
 func (this *adminController) Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(UserDAO.GetUsers())
+	//fmt.Println(UserDAO.GetUsers())
 	this.layout.Render(w,
-		"layout",
-		struct{ PageTitle string }{"Dashboard - Index"},
+		map[string]interface{}{"PageTitle": "Index"},
 		"templates/admin/layout.gohtml", "templates/admin/index.gohtml")
 }
