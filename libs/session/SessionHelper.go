@@ -63,8 +63,8 @@ func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) (user Us
 		// if the user exists already, get user
 		session := SessionDAO.GetSession(c.Value) // retrieve the session
 		if len(session.Email) > 0 {               // check for the user email
-			SessionDAO.Renew(c.Value)                   // update LastActivity
-			user, _ = UserDAO.GetByEmail(session.Email) // retrieve user
+			SessionDAO.Renew(c.Value)                     // update LastActivity
+			user, _ = UserDAO().GetByEmail(session.Email) // retrieve user
 			return
 		}
 	}

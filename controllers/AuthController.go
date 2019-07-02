@@ -41,7 +41,7 @@ func (this *authController) signupProcess(w http.ResponseWriter, r *http.Request
 		Password: []byte(r.FormValue("password")),
 		Role:     r.FormValue("role")}
 
-	if e := UserDAO.Create(&user); e != nil { // check if email is unique
+	if e := UserDAO().Create(&user); e != nil { // check if email is unique
 		http.Error(w, e.Error(), http.StatusForbidden)
 		return
 	}
@@ -64,7 +64,7 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 	pass := r.FormValue("password")
 
 	// check user exists and retrieve its password
-	user, _ := UserDAO.GetByEmail(email)
+	user, _ := UserDAO().GetByEmail(email)
 	if !(len(user.Email) > 0) {
 		http.Error(w, "!Username and/or password do not match", http.StatusForbidden)
 		return

@@ -13,11 +13,9 @@ import (
 // Struct type userDAO -
 type userDAO struct{}
 
-var UserDAO *userDAO
-
-// init function - data and process initialization
-func init() {
-	UserDAO = &userDAO{}
+// UserDAO function -
+func UserDAO() *userDAO {
+	return &userDAO{}
 }
 
 // Create method - Stores a new user in the system
@@ -44,7 +42,7 @@ func (this *userDAO) GetByEmail(email string) (user User, e error) {
 	wg.Add(1)
 	go func() {
 		user = User{Email: email}
-		if e = DbConn.SelectOne(&user); e != nil { // try to store the user in the db
+		if e = DbConn.SelectOne(&user); e != nil { // try retrieve the user
 			log.Write("error", e.Error(), log.Trace())
 		}
 		defer wg.Done()
@@ -58,7 +56,7 @@ func (this *userDAO) GetUsers() (users []User, e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		if e = DbConn.Select(&users); e != nil { // try to store the user in the db
+		if e = DbConn.Select(&users); e != nil { // try to retrieve the users
 			log.Write("error", e.Error(), log.Trace())
 		}
 		defer wg.Done()
