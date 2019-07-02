@@ -2,6 +2,7 @@ package main
 
 import (
 	. "GoAuthorization/libs/databases"
+	. "GoAuthorization/models"
 	. "GoAuthorization/routers"
 	"net/http"
 )
@@ -9,7 +10,7 @@ import (
 // init function - data and process initialization
 func init() {
 	// automaticaly creates the tables, if non existent
-	DbConn.Migrate(&UserModel{}, &SessionModel{})
+	DbConn.Migrate(&User{})
 }
 
 func main() {

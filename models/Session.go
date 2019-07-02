@@ -3,13 +3,12 @@
 package models
 
 import (
-	"github.com/jinzhu/gorm"
+	//"github.com/jinzhu/gorm"
 	"time"
 )
 
 type Session struct {
-	gorm.Model
-	UserId       int
+	//gorm.Model
 	Email        string
 	LastActivity time.Time
 }

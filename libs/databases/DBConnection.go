@@ -37,13 +37,18 @@ func init() {
 	DbConn = &dbConn{db: db}
 }
 
-// Insert method -
-func (this *dbConn) Insert(obj interface{}) (e error) {
-	this.db.Create(obj)
+// check method -
+func (this *dbConn) check() (e error) {
 	if faults := this.db.GetErrors(); len(faults) > 0 {
 		e = faults[0]
 	}
 	return
+}
+
+// Insert method -
+func (this *dbConn) Insert(obj interface{}) (e error) {
+	this.db.Create(obj)
+	return this.check()
 }
 
 // Select method -
@@ -53,7 +58,8 @@ func (this *dbConn) Select(obj interface{}) (e error) {
 
 // SelectOne method -
 func (this *dbConn) SelectOne(obj interface{}) (e error) {
-	return e
+	this.db.Take(obj)
+	return this.check()
 }
 
 // Update method -

@@ -7,6 +7,7 @@ import (
 	. "GoAuthorization/libs/session"
 	. "GoAuthorization/models"
 	. "GoAuthorization/models/dao"
+	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
@@ -36,13 +37,9 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 
 // signupProcess method - process a post request form. data
 func (this *authController) signupProcess(w http.ResponseWriter, r *http.Request) {
-	// encrypt the password
-	pass, _ := bcrypt.GenerateFromPassword([]byte(r.FormValue("password")),
-		bcrypt.MinCost)
-
 	user := User{ // create a user object with the form data
 		Email:    r.FormValue("email"),
-		Password: pass,
+		Password: []byte(r.FormValue("password")),
 		Role:     r.FormValue("role")}
 
 	if e := UserDAO.Create(&user); e != nil { // check if email is unique
@@ -68,14 +65,17 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 	pass := r.FormValue("password")
 
 	// check user exists and retrieve its password
-	user := UserDAO.GetByEmail(email)
-	if !(user.Id > 0) {
-		http.Error(w, "Username and/or password do not match", http.StatusForbidden)
+	user, _ := UserDAO.GetByEmail(email)
+	if !(len(user.Email) > 0) {
+		http.Error(w, "!Username and/or password do not match", http.StatusForbidden)
 		return
 	}
 
 	// compare the password
 	e := bcrypt.CompareHashAndPassword(user.Password, []byte(pass))
+	fmt.Println(user.Password)
+	fmt.Println([]byte(pass))
+	fmt.Println(pass)
 	if e != nil {
 		http.Error(w, "Username and/or password do not match", http.StatusForbidden)
 		return
@@ -84,7 +84,7 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 	// start session and retrieves the session id
 	sid := SessionHelper().Start(w, r)
 	// store session
-	SessionDAO.Insert(sid, &Session{user.Id, user.Email, time.Now()})
+	SessionDAO.Insert(sid, &Session{user.Email, time.Now()})
 
 	// redirect
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
