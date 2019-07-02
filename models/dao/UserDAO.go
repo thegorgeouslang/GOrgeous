@@ -15,13 +15,9 @@ type userDAO struct{}
 
 var UserDAO *userDAO
 
-// variable simulates a database table
-var UserTbl []User
-
 // init function - data and process initialization
 func init() {
 	UserDAO = &userDAO{}
-	UserTbl = append(UserTbl, User{})
 }
 
 // Create method - Stores a new user in the system
@@ -58,6 +54,15 @@ func (this *userDAO) GetByEmail(email string) (user User, e error) {
 }
 
 // GetUsers method -
-func (this *userDAO) GetUsers() []User {
-	return UserTbl
+func (this *userDAO) GetUsers() (users []User, e error) {
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		if e = DbConn.Select(&users); e != nil { // try to store the user in the db
+			log.Write("error", e.Error(), log.Trace())
+		}
+		defer wg.Done()
+	}()
+	wg.Wait()
+	return
 }

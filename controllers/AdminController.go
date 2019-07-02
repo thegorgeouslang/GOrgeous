@@ -32,7 +32,7 @@ func (this *adminController) Index(w http.ResponseWriter, r *http.Request) {
 
 // Index method -
 func (this *adminController) Users(w http.ResponseWriter, r *http.Request) {
-	users := UserDAO.GetUsers()
+	users, _ := UserDAO.GetUsers()
 	this.layout.Render(w,
 		map[string]interface{}{
 			"PageTitle": "Dashboard Users",

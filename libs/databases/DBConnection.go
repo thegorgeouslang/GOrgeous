@@ -41,23 +41,25 @@ func init() {
 func (this *dbConn) check() (e error) {
 	if faults := this.db.GetErrors(); len(faults) > 0 {
 		e = faults[0]
+		log.Write("error", e.Error(), log.Trace())
 	}
 	return
 }
 
 // Insert method -
-func (this *dbConn) Insert(obj interface{}) (e error) {
+func (this *dbConn) Insert(obj interface{}) error {
 	this.db.Create(obj)
 	return this.check()
 }
 
 // Select method -
-func (this *dbConn) Select(obj interface{}) (e error) {
-	return e
+func (this *dbConn) Select(obj interface{}) error {
+	this.db.Find(obj)
+	return this.check()
 }
 
 // SelectOne method -
-func (this *dbConn) SelectOne(obj interface{}) (e error) {
+func (this *dbConn) SelectOne(obj interface{}) error {
 	this.db.Take(obj)
 	return this.check()
 }

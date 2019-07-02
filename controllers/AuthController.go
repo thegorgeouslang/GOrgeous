@@ -7,7 +7,6 @@ import (
 	. "GoAuthorization/libs/session"
 	. "GoAuthorization/models"
 	. "GoAuthorization/models/dao"
-	"fmt"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
@@ -73,9 +72,6 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 
 	// compare the password
 	e := bcrypt.CompareHashAndPassword(user.Password, []byte(pass))
-	fmt.Println(user.Password)
-	fmt.Println([]byte(pass))
-	fmt.Println(pass)
 	if e != nil {
 		http.Error(w, "Username and/or password do not match", http.StatusForbidden)
 		return
