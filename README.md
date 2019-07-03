@@ -1,7 +1,7 @@
 # GoAuthorization
 
-The project exemplifies using as few dependencies as possible. No database was used, but a simulation of one to store users for future login.
-
+Project exemplifies the use implementation of Sessions, Authentication and Authorization along with GORM and
+pre-configured to run with postgresql
 
 **by [James Mallon]**
 
