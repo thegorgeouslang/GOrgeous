@@ -8,8 +8,10 @@ import (
 	"testing"
 )
 
-var mux *http.ServeMux
-var writer *httptest.ResponseRecorder
+var (
+	mux    *http.ServeMux
+	writer *httptest.ResponseRecorder
+)
 
 // setUp function -
 func setUp() {
