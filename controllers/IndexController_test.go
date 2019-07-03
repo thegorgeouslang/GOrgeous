@@ -13,7 +13,7 @@ var writer *httptest.ResponseRecorder
 
 // setUp function -
 func setUp() {
-	mux = http.NewServeMux()
+	mux = http.NewServeMux() // mux for requests testing
 	writer = httptest.NewRecorder()
 }
 
