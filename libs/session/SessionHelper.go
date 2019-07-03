@@ -43,9 +43,9 @@ func (this *sessionHelper) GetSession(w http.ResponseWriter, r *http.Request) (e
 	if e != nil {
 		return
 	}
-	session := SessionDAO.GetSession(c.Value)
+	session, _ := SessionDAO().GetSession(c.Value)
 	if session.Email != "" {
-		SessionDAO.Renew(c.Value)
+		SessionDAO().Renew(c.Value)
 	}
 	// refresh session
 	c.MaxAge = this.sessExp
@@ -61,9 +61,9 @@ func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) (user Us
 		http.SetCookie(w, c)
 
 		// if the user exists already, get user
-		session := SessionDAO.GetSession(c.Value) // retrieve the session
-		if len(session.Email) > 0 {               // check for the user email
-			SessionDAO.Renew(c.Value)                     // update LastActivity
+		session, _ := SessionDAO().GetSession(c.Value) // retrieve the session
+		if len(session.Email) > 0 {                    // check for the user email
+			SessionDAO().Renew(c.Value)                   // update LastActivity
 			user, _ = UserDAO().GetByEmail(session.Email) // retrieve user
 			return
 		}
@@ -72,10 +72,12 @@ func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) (user Us
 }
 
 // CloseSession method -
-func (this *sessionHelper) Close(w http.ResponseWriter, r *http.Request) {
+func (this *sessionHelper) Close(w http.ResponseWriter, r *http.Request) (sid string) {
 	c, err := r.Cookie("session") // create the cookie
 	if err == nil {
+		sid = c.Value
 		c.MaxAge = -1
 		http.SetCookie(w, c)
 	}
+	return
 }

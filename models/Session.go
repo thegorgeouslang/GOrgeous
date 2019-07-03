@@ -9,6 +9,7 @@ import (
 
 type Session struct {
 	gorm.Model
+	SID          string
 	Email        string
 	LastActivity time.Time
 }

@@ -4,7 +4,7 @@ package dao
 
 import (
 	. "GoAuthorization/libs/databases"
-	log "GoAuthorization/libs/logger"
+	//log "GoAuthorization/libs/logger"
 	. "GoAuthorization/models"
 	"golang.org/x/crypto/bcrypt"
 	"sync"
@@ -26,10 +26,8 @@ func (this *userDAO) Create(user *User) (e error) {
 		// it creates a hashed byte slice from the user password
 		pass, _ := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 		user.Password = pass // apply the encrypted pass to the user obj
-
-		if e = DbConn.Insert(&user); e != nil { // try to store the user in the db
-			log.Write("error", e.Error(), log.Trace())
-		}
+		DbConn.GetConn().Create(&user)
+		e = DbConn.Check() // check for errors
 		defer wg.Done()
 	}()
 	wg.Wait()
@@ -42,9 +40,8 @@ func (this *userDAO) GetByEmail(email string) (user User, e error) {
 	wg.Add(1)
 	go func() {
 		user = User{Email: email}
-		if e = DbConn.SelectOne(&user); e != nil { // try retrieve the user
-			log.Write("error", e.Error(), log.Trace())
-		}
+		DbConn.GetConn().Take(&user)
+		e = DbConn.Check() // check for errors
 		defer wg.Done()
 	}()
 	wg.Wait()
@@ -56,9 +53,8 @@ func (this *userDAO) GetUsers() (users []User, e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		if e = DbConn.Select(&users); e != nil { // try to retrieve the users
-			log.Write("error", e.Error(), log.Trace())
-		}
+		DbConn.GetConn().Find(&users)
+		e = DbConn.Check() // check for errors
 		defer wg.Done()
 	}()
 	wg.Wait()

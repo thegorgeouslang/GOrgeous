@@ -11,19 +11,20 @@ import (
 	"time"
 )
 
-var lg *log.Logger
+var (
+	lg *log.Logger
+)
 
+// init function - initializing log file in a singleton form to increase the system
+// performance
 func init() {
 	// set location of log file
 	var logpath = fmt.Sprintf("%s%s%s",
-		//configs.LOGFILE_PATH,            // logfile path
-		conf.Env["logfile_path"],
+		conf.Env["logfile_path"],        // logfile path
 		time.Now().Format("2006_01_02"), // logfile name
-		conf.Env["logfile_ext"])
-	//configs.LOGFILE_EXT)             // logfile extension
+		conf.Env["logfile_ext"])         // logfile extension
 
 	var file, e = os.OpenFile(logpath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 1444)
-
 	if e != nil {
 		panic(e)
 	}

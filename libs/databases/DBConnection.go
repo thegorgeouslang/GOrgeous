@@ -37,41 +37,18 @@ func init() {
 	DbConn = &dbConn{db: db}
 }
 
+// GetConn method -
+func (this *dbConn) GetConn() *gorm.DB {
+	return this.db
+}
+
 // check method -
-func (this *dbConn) check() (e error) {
+func (this *dbConn) Check() (e error) {
 	if faults := this.db.GetErrors(); len(faults) > 0 {
 		e = faults[0]
 		log.Write("error", e.Error(), log.Trace())
 	}
 	return
-}
-
-// Insert method -
-func (this *dbConn) Insert(obj interface{}) error {
-	this.db.Create(obj)
-	return this.check()
-}
-
-// Select method -
-func (this *dbConn) Select(obj interface{}) error {
-	this.db.Find(obj)
-	return this.check()
-}
-
-// SelectOne method -
-func (this *dbConn) SelectOne(obj interface{}) error {
-	this.db.Take(obj)
-	return this.check()
-}
-
-// Update method -
-func (this *dbConn) Update(obj interface{}) (e error) {
-	return e
-}
-
-// Delete method -
-func (this *dbConn) Delete(obj interface{}) (e error) {
-	return e
 }
 
 //  Migrate method - create tables based on models

@@ -80,7 +80,7 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 	// start session and retrieves the session id
 	sid := SessionHelper().Start(w, r)
 	// store session
-	SessionDAO.Insert(sid, &Session{user.Email, time.Now()})
+	SessionDAO().Create(&Session{SID: sid, Email: user.Email, LastActivity: time.Now()})
 
 	// redirect
 	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
@@ -89,6 +89,9 @@ func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request)
 
 // Login method -
 func (this *authController) Logout(w http.ResponseWriter, r *http.Request) {
-	SessionHelper().Close(w, r)
+	sid := SessionHelper().Close(w, r)
+	if len(sid) > 0 {
+		SessionDAO().Remove(sid)
+	}
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
