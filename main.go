@@ -10,7 +10,7 @@ import (
 // init function - data and process initialization
 func init() {
 	// automaticaly creates the tables, if non existent
-	DbConn.Migrate(&User{})
+	DbConn.Migrate(&User{}, &Session{})
 }
 
 func main() {

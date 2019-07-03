@@ -27,3 +27,6 @@ vendor/
 
 # log files
 *.log
+
+# todos
+TODO
