@@ -59,7 +59,6 @@ func TestSignupProcess(t *testing.T) {
 	if w2.Code != 403 { // desired, it means that the system doesn't allow duplicate emails
 		t.Errorf("Response code is %v", w2.Code)
 	}
-	tearDown()
 }
 
 // Test function TestLogin to evaluate the Index action
@@ -73,6 +72,38 @@ func TestLogin(t *testing.T) {
 	mux.ServeHTTP(writer, request)
 
 	if writer.Code != 200 { // check the response for errors
+		t.Errorf("Response code is %v", writer.Code)
+	}
+}
+
+// Test function TestLoginProcess to evaluate the Index action
+func TestLoginProcess(t *testing.T) {
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/login", AuthController().Login)
+	w := httptest.NewRecorder()
+
+	r := httptest.NewRequest("POST", "/login", strings.NewReader(user)) // send a request to the get  handler
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	mux.ServeHTTP(w, r)
+
+	if w.Code != 303 { // desired, it means (in the current implementation) that the request was redirected
+		t.Errorf("Response code is %v", w.Code)
+	}
+	tearDown()
+}
+
+// Test function TestLogout to evaluate the Index action
+func TestLogout(t *testing.T) {
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/logout", AuthController().Logout)
+	writer := httptest.NewRecorder()
+
+	request, _ := http.NewRequest("GET", "/logout", nil) // send a request to the get  handler
+	mux.ServeHTTP(writer, request)
+
+	if writer.Code != 303 { // check the response for errors
 		t.Errorf("Response code is %v", writer.Code)
 	}
 }
