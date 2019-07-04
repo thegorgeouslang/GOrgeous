@@ -6,7 +6,8 @@
 package configs
 
 import (
-	"github.com/joho/godotenv"
+	"encoding/json"
+	"io/ioutil"
 	"log"
 	"os"
 )
@@ -16,14 +17,14 @@ var Env map[string]string
 
 // init function - data and process initialization
 func init() {
-	envFile := os.Getenv("GOPATH") + "/src/GoAuthorization/.env"
-	e := godotenv.Load(envFile)
+	envFile := os.Getenv("GOPATH") + "/src/GoAuthorization/env.json"
+	jsonFile, e := os.Open(envFile)
 	if e != nil {
-		//var lg *log.Logger
-		//file, _ := os.OpenFile(os.Getenv("GOPATH")+"/src/GoAuthorization/logs/config.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 1444)
-		//lg = log.New(file, "", log.LstdFlags|log.Lshortfile)
-		//lg.Printf("Error loading the .env file - %s", e.Error())
 		log.Fatal(e.Error())
 	}
-	Env, e = godotenv.Read()
+	jsonData, e := ioutil.ReadAll(jsonFile)
+	if e != nil {
+		log.Fatal(e.Error())
+	}
+	json.Unmarshal(jsonData, &Env)
 }
