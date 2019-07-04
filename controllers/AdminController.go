@@ -19,8 +19,8 @@ func AdminController() *adminController {
 	return &adminController{}
 }
 
-// Index method -
-func (this *adminController) Index(w http.ResponseWriter, r *http.Request) {
+// Dashboard method -
+func (this *adminController) Dashboard(w http.ResponseWriter, r *http.Request) {
 	user := SessionHelper().User(w, r)
 	this.Render(w,
 		map[string]interface{}{
