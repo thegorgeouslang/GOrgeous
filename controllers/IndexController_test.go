@@ -3,8 +3,6 @@
 package controllers
 
 import (
-	conf "GoAuthorization/configs"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,7 +10,6 @@ import (
 
 // Test function TestIndex to evaluate the Index action
 func TestIndex(t *testing.T) {
-	fmt.Println(conf.Env["project_name"])
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", IndexController().Index)
@@ -28,7 +25,6 @@ func TestIndex(t *testing.T) {
 
 // Test function TestAbout to evaluate the Index action
 func TestAbout(t *testing.T) {
-	fmt.Println(conf.Env["project_name"])
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/about", IndexController().Index)
@@ -44,7 +40,6 @@ func TestAbout(t *testing.T) {
 
 // Test function TestContactUs to evaluate the Index action
 func TestContactUs(t *testing.T) {
-	fmt.Println(conf.Env["project_name"])
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/contactus", IndexController().Index)
