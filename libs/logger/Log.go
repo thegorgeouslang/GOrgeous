@@ -19,12 +19,14 @@ var (
 // performance
 func init() {
 	// set location of log file
-	var logpath = fmt.Sprintf("%s%s%s",
+	var logpath = fmt.Sprintf("%s/src/%s/%s%s%s",
+		os.Getenv("GOPATH"),
+		conf.Env["project_name"],
 		conf.Env["logfile_path"],        // logfile path
 		time.Now().Format("2006_01_02"), // logfile name
 		conf.Env["logfile_ext"])         // logfile extension
 
-	var file, e = os.OpenFile(logpath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 1444)
+	file, e := os.OpenFile(logpath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 1444)
 	if e != nil {
 		panic(e)
 	}

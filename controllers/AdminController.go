@@ -11,7 +11,7 @@ import (
 
 // Struct type adminController -
 type adminController struct {
-	layout LayoutHelper
+	LayoutHelper
 }
 
 // AdminController function -
@@ -22,21 +22,21 @@ func AdminController() *adminController {
 // Index method -
 func (this *adminController) Index(w http.ResponseWriter, r *http.Request) {
 	user := SessionHelper().User(w, r)
-	this.layout.Render(w,
+	this.Render(w,
 		map[string]interface{}{
 			"PageTitle": "Dashboard",
 			"User":      user,
 		},
-		"templates/admin/layout.gohtml", "templates/admin/index.gohtml")
+		"admin/layout.gohtml", "admin/index.gohtml")
 }
 
 // Index method -
 func (this *adminController) Users(w http.ResponseWriter, r *http.Request) {
 	users, _ := UserDAO().GetUsers()
-	this.layout.Render(w,
+	this.Render(w,
 		map[string]interface{}{
 			"PageTitle": "Dashboard Users",
 			"Users":     users,
 		},
-		"templates/admin/layout.gohtml", "templates/admin/users.gohtml")
+		"admin/layout.gohtml", "admin/users.gohtml")
 }

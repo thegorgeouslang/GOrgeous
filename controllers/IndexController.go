@@ -9,7 +9,7 @@ import (
 
 // Struct type indexController -
 type indexController struct {
-	layout LayoutHelper
+	LayoutHelper
 }
 
 // IndexController function -
@@ -19,21 +19,21 @@ func IndexController() *indexController {
 
 // Index method -
 func (this *indexController) Index(w http.ResponseWriter, r *http.Request) {
-	this.layout.Render(w,
+	this.Render(w,
 		map[string]interface{}{"PageTitle": "Index"},
-		"templates/layout.gohtml", "templates/index/index.gohtml")
+		"layout.gohtml", "index/index.gohtml")
 }
 
 // About method -
 func (this *indexController) About(w http.ResponseWriter, r *http.Request) {
-	this.layout.Render(w,
+	this.Render(w,
 		map[string]interface{}{"PageTitle": "Index"},
-		"templates/layout.gohtml", "templates/index/about.gohtml")
+		"layout.gohtml", "index/about.gohtml")
 }
 
 // ContactUs method -
 func (this *indexController) ContactUs(w http.ResponseWriter, r *http.Request) {
-	this.layout.Render(w,
+	this.Render(w,
 		map[string]interface{}{"PageTitle": "Index"},
-		"templates/layout.gohtml", "templates/index/contact.gohtml")
+		"layout.gohtml", "index/contact.gohtml")
 }

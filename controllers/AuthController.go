@@ -31,7 +31,7 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 	this.pageData = map[string]interface{}{"PageTitle": "Index"}
 	this.Render(w,
 		this.pageData,
-		"templates/layout.gohtml", "templates/auth/signup.gohtml")
+		"layout.gohtml", "auth/signup.gohtml")
 }
 
 // signupProcess method - process a post request form. data
@@ -55,7 +55,7 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 	}
 	this.Render(w,
 		struct{ PageTitle string }{"Index"},
-		"templates/layout.gohtml", "templates/auth/login.gohtml")
+		"layout.gohtml", "auth/login.gohtml")
 }
 
 // loginProcess method - process a post login request
