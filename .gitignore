@@ -18,6 +18,7 @@ main
 
 # environment file
 .env
+env.json
 
 # node dependencies
 node_modules/
