@@ -1,9 +1,16 @@
 {{define "content"}}
 <h1> You're in the Dashboard </h1>
-<ul>
+<table align=center>
+    <tr>
+        <th>Username/Email</th>
+        <th>Role</th>
+    </tr>
     {{ range .Users }}
-       <li>{{.Email}}</li>
+        <tr>
+            <td>{{.Email}}</td>
+            <td>{{.Role}}</td>
+        </tr>
     {{end}}
-</ul>
+</table>
 <h2><a href="/logout">log out</a></h2>        
 {{end}}

@@ -20,7 +20,7 @@ func IndexController() *indexController {
 // Index method -
 func (this *indexController) Index(w http.ResponseWriter, r *http.Request) {
 	PageData["PageTitle"] = "Index"
-	this.Render(w,
+	this.Render(w, r,
 		PageData,
 		"layout.gohtml", "index/index.gohtml")
 }
@@ -28,7 +28,7 @@ func (this *indexController) Index(w http.ResponseWriter, r *http.Request) {
 // About method -
 func (this *indexController) About(w http.ResponseWriter, r *http.Request) {
 	PageData["PageTitle"] = "About"
-	this.Render(w,
+	this.Render(w, r,
 		PageData,
 		"layout.gohtml", "index/about.gohtml")
 }
@@ -36,7 +36,7 @@ func (this *indexController) About(w http.ResponseWriter, r *http.Request) {
 // ContactUs method -
 func (this *indexController) ContactUs(w http.ResponseWriter, r *http.Request) {
 	PageData["PageTitle"] = "Contact Us"
-	this.Render(w,
+	this.Render(w, r,
 		PageData,
 		"layout.gohtml", "index/contact.gohtml")
 }

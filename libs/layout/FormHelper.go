@@ -29,7 +29,6 @@ var messages = map[string]string{
 }
 
 // FilterEmail method -
-//func (this *FormHelper) FormFilter(fields map[string]string) (e []error) {
 func (this *FormHelper) FormFilter(fields url.Values) (e []error) {
 	for frule, patt := range rules {
 		for field, val := range fields {
@@ -49,8 +48,9 @@ func (this *FormHelper) FormFilter(fields url.Values) (e []error) {
 }
 
 // CheckErrors method -
-func (this *FormHelper) CheckFormErrors(es []error, w http.ResponseWriter) {
+func (this *FormHelper) CheckFormErrors(es []error, w http.ResponseWriter) (emsg string) {
 	for _, e := range es {
-		http.Error(w, e.Error(), http.StatusForbidden)
+		emsg = emsg + e.Error()
 	}
+	return
 }

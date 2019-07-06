@@ -15,7 +15,7 @@ var PageData map[string]interface{}
 // Struct type layoutHelper - offer DRY solutions to common controllers actions
 type LayoutHelper struct {
 	ViewHelper
-	FlashMsgHelper
+	flashMsg FlashMsgHelper
 }
 
 // init function - data and process initialization
@@ -26,14 +26,16 @@ func init() {
 }
 
 // Render method -
-func (this *LayoutHelper) Render(w http.ResponseWriter, pageData interface{}, views ...string) {
+func (this *LayoutHelper) Render(w http.ResponseWriter, r *http.Request, pageData map[string]interface{}, views ...string) {
 	this.concatPath(views)
+
 	tpl, e := template.New("layout").Funcs(template.FuncMap{
 		"fdate":   this.FormatDate,
 		"toUpper": this.ToUpper,
 		"toLower": this.ToLower,
 		"ucFirst": this.UCFirst,
 	}).ParseFiles(views...)
+	pageData["FlashMessage"] = this.flashMsg.Get(w, r)
 	e = tpl.Execute(w, pageData)
 	if e != nil {
 		log.Write("Error", e.Error(), log.Trace())

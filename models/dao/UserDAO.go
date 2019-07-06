@@ -4,7 +4,6 @@ package dao
 
 import (
 	. "GoAuthorization/libs/databases"
-	//log "GoAuthorization/libs/logger"
 	. "GoAuthorization/models"
 	"errors"
 	"golang.org/x/crypto/bcrypt"
@@ -45,8 +44,7 @@ func (this *userDAO) GetByEmail(email string) (user User, e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		user = User{Email: email}
-		DbConn.GetConn().Take(&user)
+		DbConn.GetConn().Where("email = ?", email).Find(&user)
 		e = DbConn.Check() // check for errors
 		defer wg.Done()
 	}()
