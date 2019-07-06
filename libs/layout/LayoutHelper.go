@@ -10,10 +10,19 @@ import (
 	"os"
 )
 
+var PageData map[string]interface{}
+
 // Struct type layoutHelper - offer DRY solutions to common controllers actions
 type LayoutHelper struct {
 	ViewHelper
-	PageData map[string]interface{}
+	FlashMsgHelper
+}
+
+// init function - data and process initialization
+func init() {
+	PageData = map[string]interface{}{
+		"PageTitle": conf.Env["project_name"],
+	}
 }
 
 // Render method -

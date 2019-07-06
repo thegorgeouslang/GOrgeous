@@ -22,21 +22,19 @@ func AdminController() *adminController {
 // Dashboard method -
 func (this *adminController) Dashboard(w http.ResponseWriter, r *http.Request) {
 	user := SessionHelper().User(w, r)
+	PageData["PageTitle"] = "Dashboard"
+	PageData["User"] = user
 	this.Render(w,
-		map[string]interface{}{
-			"PageTitle": "Dashboard",
-			"User":      user,
-		},
+		PageData,
 		"admin/layout.gohtml", "admin/index.gohtml")
 }
 
 // Index method -
 func (this *adminController) Users(w http.ResponseWriter, r *http.Request) {
 	users, _ := UserDAO().GetUsers()
+	PageData["PageTitle"] = "Dashboard Users"
+	PageData["User"] = users
 	this.Render(w,
-		map[string]interface{}{
-			"PageTitle": "Dashboard Users",
-			"Users":     users,
-		},
+		PageData,
 		"admin/layout.gohtml", "admin/users.gohtml")
 }

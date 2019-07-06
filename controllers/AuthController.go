@@ -15,7 +15,7 @@ import (
 // Struct type authController -
 type authController struct {
 	LayoutHelper
-	pageData map[string]interface{}
+	FormHelper
 }
 
 // AuthController function -
@@ -28,9 +28,9 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost { // if request was post process the form info
 		this.signupProcess(w, r)
 	}
-	this.pageData = map[string]interface{}{"PageTitle": "Index"}
+	PageData["PageTitle"] = "Signup"
 	this.Render(w,
-		this.pageData,
+		PageData,
 		"layout.gohtml", "auth/signup.gohtml")
 }
 
@@ -53,13 +53,21 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		this.loginProcess(w, r)
 	}
+	PageData["PageTitle"] = "Login"
 	this.Render(w,
-		struct{ PageTitle string }{"Index"},
+		PageData,
 		"layout.gohtml", "auth/login.gohtml")
 }
 
 // loginProcess method - process a post login request
 func (this *authController) loginProcess(w http.ResponseWriter, r *http.Request) {
+	_ = r.ParseForm()
+	if formErrs := this.FormFilter(r.Form); len(formErrs) > 0 {
+		this.CheckFormErrors(formErrs, w)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
 	email := r.FormValue("email")
 	pass := r.FormValue("password")
 

@@ -19,21 +19,24 @@ func IndexController() *indexController {
 
 // Index method -
 func (this *indexController) Index(w http.ResponseWriter, r *http.Request) {
+	PageData["PageTitle"] = "Index"
 	this.Render(w,
-		map[string]interface{}{"PageTitle": "Index"},
+		PageData,
 		"layout.gohtml", "index/index.gohtml")
 }
 
 // About method -
 func (this *indexController) About(w http.ResponseWriter, r *http.Request) {
+	PageData["PageTitle"] = "About"
 	this.Render(w,
-		map[string]interface{}{"PageTitle": "Index"},
+		PageData,
 		"layout.gohtml", "index/about.gohtml")
 }
 
 // ContactUs method -
 func (this *indexController) ContactUs(w http.ResponseWriter, r *http.Request) {
+	PageData["PageTitle"] = "Contact Us"
 	this.Render(w,
-		map[string]interface{}{"PageTitle": "Index"},
+		PageData,
 		"layout.gohtml", "index/contact.gohtml")
 }
