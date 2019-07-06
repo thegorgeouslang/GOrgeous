@@ -3,7 +3,7 @@
 package controllers
 
 import (
-	. "GoAuthorization/libs/layout"
+	. "TheGorgeous/libs/layout"
 	"net/http"
 )
 

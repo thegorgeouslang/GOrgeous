@@ -3,9 +3,9 @@
 package controllers
 
 import (
-	. "GoAuthorization/libs/layout"
-	. "GoAuthorization/libs/session"
-	. "GoAuthorization/models/dao"
+	. "TheGorgeous/libs/layout"
+	. "TheGorgeous/libs/session"
+	. "TheGorgeous/models/dao"
 	"net/http"
 )
 

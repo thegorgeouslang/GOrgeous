@@ -3,8 +3,8 @@
 package layout
 
 import (
-	conf "GoAuthorization/configs"
-	log "GoAuthorization/libs/logger"
+	conf "TheGorgeous/configs"
+	log "TheGorgeous/libs/logger"
 	"html/template"
 	"net/http"
 	"os"

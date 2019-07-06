@@ -3,9 +3,9 @@
 package dao
 
 import (
-	. "GoAuthorization/libs/databases"
-	//log "GoAuthorization/libs/logger"
-	. "GoAuthorization/models"
+	. "TheGorgeous/libs/databases"
+	//log "TheGorgeous/libs/logger"
+	. "TheGorgeous/models"
 	"sync"
 	"time"
 )

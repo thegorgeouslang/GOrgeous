@@ -3,7 +3,7 @@
 package middlewares
 
 import (
-	. "GoAuthorization/libs/session"
+	. "TheGorgeous/libs/session"
 	"net/http"
 )
 

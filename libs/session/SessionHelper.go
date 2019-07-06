@@ -3,9 +3,9 @@
 package session
 
 import (
-	conf "GoAuthorization/configs"
-	. "GoAuthorization/models"
-	. "GoAuthorization/models/dao"
+	conf "TheGorgeous/configs"
+	. "TheGorgeous/models"
+	. "TheGorgeous/models/dao"
 	"github.com/satori/go.uuid"
 	"net/http"
 	"strconv"

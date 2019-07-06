@@ -1,4 +1,4 @@
-# GoAuthorization
+# TheGorgeous
 
 Project exemplifies the use implementation of Sessions, Authentication and Authorization along with GORM and
 pre-configured to run with postgresql

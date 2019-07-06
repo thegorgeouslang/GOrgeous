@@ -3,8 +3,8 @@
 package dao
 
 import (
-	. "GoAuthorization/libs/databases"
-	. "GoAuthorization/models"
+	. "TheGorgeous/libs/databases"
+	. "TheGorgeous/models"
 	"errors"
 	"golang.org/x/crypto/bcrypt"
 	"sync"

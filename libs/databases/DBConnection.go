@@ -3,8 +3,8 @@
 package databases
 
 import (
-	conf "GoAuthorization/configs"
-	log "GoAuthorization/libs/logger"
+	conf "TheGorgeous/configs"
+	log "TheGorgeous/libs/logger"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"

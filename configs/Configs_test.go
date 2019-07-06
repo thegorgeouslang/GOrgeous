@@ -8,7 +8,7 @@ import (
 
 // Test function TestInit to evaluate the Init
 func TestInit(t *testing.T) {
-	if Env["project_name"] != "GoAuthorization" { // check the response for errors
-		t.Errorf("The value should be GoAuthorization")
+	if Env["project_name"] != "TheGorgeous" { // check the response for errors
+		t.Errorf("The value should be TheGorgeous")
 	}
 }

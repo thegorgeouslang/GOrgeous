@@ -3,8 +3,8 @@
 package routers
 
 import (
-	. "GoAuthorization/controllers"
-	. "GoAuthorization/middlewares"
+	. "TheGorgeous/controllers"
+	. "TheGorgeous/middlewares"
 	"net/http"
 )
 

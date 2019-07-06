@@ -3,7 +3,7 @@
 package layout
 
 import (
-	log "GoAuthorization/libs/logger"
+	log "TheGorgeous/libs/logger"
 	"encoding/base64"
 	"net/http"
 	"time"

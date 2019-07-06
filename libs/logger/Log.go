@@ -3,7 +3,7 @@
 package logger
 
 import (
-	conf "GoAuthorization/configs"
+	conf "TheGorgeous/configs"
 	"fmt"
 	"log"
 	"os"

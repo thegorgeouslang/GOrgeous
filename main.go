@@ -1,10 +1,10 @@
 package main
 
 import (
-	conf "GoAuthorization/configs"
-	. "GoAuthorization/libs/databases"
-	. "GoAuthorization/models"
-	. "GoAuthorization/routers"
+	conf "TheGorgeous/configs"
+	. "TheGorgeous/libs/databases"
+	. "TheGorgeous/models"
+	. "TheGorgeous/routers"
 	"net/http"
 )
 

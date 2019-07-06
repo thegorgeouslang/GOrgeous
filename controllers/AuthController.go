@@ -3,10 +3,10 @@
 package controllers
 
 import (
-	. "GoAuthorization/libs/layout"
-	. "GoAuthorization/libs/session"
-	. "GoAuthorization/models"
-	. "GoAuthorization/models/dao"
+	. "TheGorgeous/libs/layout"
+	. "TheGorgeous/libs/session"
+	. "TheGorgeous/models"
+	. "TheGorgeous/models/dao"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"

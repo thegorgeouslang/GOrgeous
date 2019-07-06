@@ -3,8 +3,8 @@
 package controllers
 
 import (
-	"GoAuthorization/models"
-	"GoAuthorization/models/dao"
+	"TheGorgeous/models"
+	"TheGorgeous/models/dao"
 	"net/http"
 	"net/http/httptest"
 	"strings"

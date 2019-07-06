@@ -17,7 +17,7 @@ var Env map[string]string
 
 // init function - data and process initialization
 func init() {
-	envFile := os.Getenv("GOPATH") + "/src/GoAuthorization/env.json"
+	envFile := os.Getenv("GOPATH") + "/src/TheGorgeous/env.json"
 	jsonFile, e := os.Open(envFile)
 	if e != nil {
 		log.Fatal(e.Error())
