@@ -18,7 +18,7 @@ func ACLMiddleware() *aclMiddleware {
 // CheckLogged method - check user aclorization
 func (this *aclMiddleware) Authorized(role string, next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		u := SessionHelper().User(w, r)
+		u := SessionManager().User(w, r)
 		if u.Role != role {
 			http.Error(w, "You must be a superuser to enter this page", http.StatusForbidden)
 			return

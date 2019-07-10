@@ -11,7 +11,7 @@ import (
 
 // Struct type adminController -
 type adminController struct {
-	LayoutHelper
+	LayoutManager
 }
 
 // AdminController function -
@@ -21,7 +21,7 @@ func AdminController() *adminController {
 
 // Dashboard method -
 func (this *adminController) Dashboard(w http.ResponseWriter, r *http.Request) {
-	user := SessionHelper().User(w, r)
+	user := SessionManager().User(w, r)
 	PageData["PageTitle"] = "Dashboard"
 	PageData["User"] = user
 	this.Render(w, r,

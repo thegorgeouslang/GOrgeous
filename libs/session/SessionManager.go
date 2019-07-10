@@ -4,6 +4,7 @@ package session
 
 import (
 	conf "TheGorgeous/configs"
+	log "TheGorgeous/libs/logger"
 	. "TheGorgeous/models"
 	. "TheGorgeous/models/dao"
 	"github.com/satori/go.uuid"
@@ -12,20 +13,21 @@ import (
 )
 
 // Struct type session -
-type sessionHelper struct {
+type sessionManager struct {
 	sessExp int
 }
 
 // init function - data and process initialization
-func SessionHelper() *sessionHelper {
+func SessionManager() *sessionManager {
 	se, _ := strconv.Atoi(conf.Env["session_exp"])
-	return &sessionHelper{se}
+	return &sessionManager{se}
 }
 
 // GetSession method -
-func (this *sessionHelper) Start(w http.ResponseWriter, r *http.Request) string {
+func (this *sessionManager) Start(w http.ResponseWriter, r *http.Request) string {
 	c, e := r.Cookie("session") // create the cookie
 	if e != nil {
+		log.Write("notice", "Creating the sesion cookie "+e.Error(), log.Trace())
 		sID := uuid.NewV4() // create the universal unique id
 		c = &http.Cookie{
 			Name:  "session",
@@ -38,7 +40,7 @@ func (this *sessionHelper) Start(w http.ResponseWriter, r *http.Request) string 
 }
 
 // Get method -
-func (this *sessionHelper) GetSession(w http.ResponseWriter, r *http.Request) (e error) {
+func (this *sessionManager) GetSession(w http.ResponseWriter, r *http.Request) (e error) {
 	c, e := r.Cookie("session") // create the cookie
 	if e != nil {
 		return
@@ -54,7 +56,7 @@ func (this *sessionHelper) GetSession(w http.ResponseWriter, r *http.Request) (e
 }
 
 //
-func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) (user User) {
+func (this *sessionManager) User(w http.ResponseWriter, r *http.Request) (user User) {
 	c, e := r.Cookie("session") // create the cookie
 	if e == nil {
 		c.MaxAge = this.sessExp
@@ -72,7 +74,7 @@ func (this *sessionHelper) User(w http.ResponseWriter, r *http.Request) (user Us
 }
 
 // CloseSession method -
-func (this *sessionHelper) Close(w http.ResponseWriter, r *http.Request) (sid string) {
+func (this *sessionManager) Close(w http.ResponseWriter, r *http.Request) (sid string) {
 	c, err := r.Cookie("session") // create the cookie
 	if err == nil {
 		sid = c.Value

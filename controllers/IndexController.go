@@ -9,7 +9,7 @@ import (
 
 // Struct type indexController -
 type indexController struct {
-	LayoutHelper
+	LayoutManager
 }
 
 // IndexController function -

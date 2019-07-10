@@ -64,14 +64,12 @@
                 </div>
             </div>
 
+            <!-- Flashmessage -->
+            {{ .FlashMessage | flash }} 
+
             <!-- Content -->
             <div class="content">
                 {{ template "content" .}}
-            </div>
-            <div>
-                {{if .FlashMessage }}
-                <span>{{.FlashMessage}}</span>
-                {{end}}
             </div>
 
             <div class="footer mt-5">
@@ -80,11 +78,14 @@
                         <a href="https://www.linkedin.com/in/thiago-mallon/" data-social="linkedin" class="text-primary" target="_blank">
                             <i class="fab fa-linkedin text-primary"></i>
                         </a>
-                        <a href="https://github.com/jamesmallon" data-social="github" class="text-dark" target="_blank">
+                        <a href="https://github.com/thegorgeouslang" data-social="github" class="text-dark" target="_blank">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://plus.google.com/u/0/115970027515273968388?tab=mX" data-social="google" class="text-danger" target="_blank">
-                            <i class="fab fa-google-plus-g text-danger"></i>
+                        <a href="mailto: thegorgeouslang@gmail.com" class="text-danger"i>
+                            <i class="fas fa-at"></i>
+                        </a>
+                        <a href="https://www.thegorgeouslang.com" class="text-dark" target="_blank">
+                            <i class="fas fa-archway"></i>
                         </a>
                     </h3>
                 </div>
@@ -95,3 +96,8 @@
 </html>
 
  {{ end }}
+            {{if .FlashMessage}}
+                <div class="alert alert-{{index .FlashMessage "type"}}" role="alert">  
+                    <span>{{index .FlashMessage "message"}}</span>
+                </div>
+            {{end}}

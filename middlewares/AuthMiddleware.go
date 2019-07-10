@@ -18,7 +18,7 @@ func AuthMiddleware() *authMiddleware {
 // CheckLogged method - check user authorization
 func (this *authMiddleware) CheckLogged(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		e := SessionHelper().GetSession(w, r)
+		e := SessionManager().GetSession(w, r)
 		if e != nil {
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return

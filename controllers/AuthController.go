@@ -3,6 +3,7 @@
 package controllers
 
 import (
+	. "TheGorgeous/controllers/helpers"
 	. "TheGorgeous/libs/layout"
 	. "TheGorgeous/libs/session"
 	. "TheGorgeous/models"
@@ -14,10 +15,12 @@ import (
 
 // Struct type authController -
 type authController struct {
-	LayoutHelper
-	FormHelper
-	flashMsg FlashMsgHelper
+	LayoutManager
+	flash FlashMessenger
 }
+
+// to fill with the flash message values
+type fm map[string]string
 
 // AuthController function -
 func AuthController() *authController {
@@ -28,9 +31,8 @@ func AuthController() *authController {
 func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost { // if request was post process the form info
 		// filtering form inputs
-		_ = r.ParseForm()
-		if formErrs := this.FormFilter(r.Form); len(formErrs) > 0 {
-			this.flashMsg.Set(&w, this.CheckFormErrors(formErrs, w))
+		if formErrs := FormHelper.Filter(r); len(formErrs) > 0 {
+			this.flash.Set(&w, fm{"message": FormHelper.ErrString(formErrs), "type": "danger"})
 			http.Redirect(w, r, "/signup", http.StatusSeeOther)
 			return
 		}
@@ -41,7 +43,7 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 			Role:     r.FormValue("role")}
 
 		if e := UserDAO().Create(&user); e != nil { // check if email is unique
-			this.flashMsg.Set(&w, e.Error())
+			this.flash.Set(&w, fm{"message": e.Error(), "type": "danger"})
 			http.Redirect(w, r, "/signup", http.StatusSeeOther)
 			return
 		}
@@ -62,7 +64,7 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 		// check user exists and retrieve its password
 		user, _ := UserDAO().GetByEmail(email)
 		if !(len(user.Email) > 0) {
-			this.flashMsg.Set(&w, "Username and/or password do not match")
+			this.flash.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
@@ -70,13 +72,13 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 		// compare the password
 		e := bcrypt.CompareHashAndPassword(user.Password, []byte(pass))
 		if e != nil {
-			this.flashMsg.Set(&w, "Username and/or password do not match")
+			this.flash.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
 
 		// start session and retrieves the session id
-		sid := SessionHelper().Start(w, r)
+		sid := SessionManager().Start(w, r)
 		// store session
 		SessionDAO().Create(&Session{SID: sid, Email: user.Email, LastActivity: time.Now()})
 
@@ -93,7 +95,7 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 
 // Login method -
 func (this *authController) Logout(w http.ResponseWriter, r *http.Request) {
-	sid := SessionHelper().Close(w, r)
+	sid := SessionManager().Close(w, r)
 	if len(sid) > 0 {
 		SessionDAO().Remove(sid)
 	}
