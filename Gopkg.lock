@@ -39,6 +39,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/thegorgeouslang/VFProvider.git"
+  packages = ["."]
+  revision = "020e3bb91a2ac30e4a67fbe496fd924d489f802d"
+
+[[projects]]
+  branch = "master"
   name = "golang.org/x/crypto"
   packages = ["bcrypt","blowfish"]
   revision = "4def268fd1a49955bfb3dda92fe3db4f924f2285"
@@ -46,6 +52,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ba176b72f356eb5b46dd66c589792f081f5daac873c6d6ddda29b66929a8d0e0"
+  inputs-digest = "677f5f55bbdd209b5821c59a9224de7109f3614d33f49d922b7055f254ed4ef2"
   solver-name = "gps-cdcl"
   solver-version = 1
