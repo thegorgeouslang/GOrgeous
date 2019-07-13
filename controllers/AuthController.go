@@ -16,7 +16,6 @@ import (
 // Struct type authController -
 type authController struct {
 	LayoutManager
-	flash FlashMessenger
 }
 
 // to fill with the flash message values
@@ -32,7 +31,7 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost { // if request was post process the form info
 		// filtering form inputs
 		if formErrs := FormHelper.Filter(r); len(formErrs) > 0 {
-			this.flash.Set(&w, fm{"message": FormHelper.ErrString(formErrs), "type": "danger"})
+			Flashmsg.Set(&w, fm{"message": FormHelper.ErrString(formErrs), "type": "danger"})
 			http.Redirect(w, r, "/signup", http.StatusSeeOther)
 			return
 		}
@@ -43,7 +42,7 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 			Role:     r.FormValue("role")}
 
 		if e := UserDAO().Create(&user); e != nil { // check if email is unique
-			this.flash.Set(&w, fm{"message": e.Error(), "type": "danger"})
+			Flashmsg.Set(&w, fm{"message": e.Error(), "type": "danger"})
 			http.Redirect(w, r, "/signup", http.StatusSeeOther)
 			return
 		}
@@ -64,7 +63,7 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 		// check user exists and retrieve its password
 		user, _ := UserDAO().GetByEmail(email)
 		if !(len(user.Email) > 0) {
-			this.flash.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
+			Flashmsg.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
@@ -72,7 +71,7 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 		// compare the password
 		e := bcrypt.CompareHashAndPassword(user.Password, []byte(pass))
 		if e != nil {
-			this.flash.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
+			Flashmsg.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}

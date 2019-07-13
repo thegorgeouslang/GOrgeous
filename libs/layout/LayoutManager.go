@@ -11,11 +11,11 @@ import (
 )
 
 var PageData map[string]interface{}
+var flashmsg = FlashMessenger{}
 
 // Struct type layoutHelper - offer DRY solutions to common controllers actions
 type LayoutManager struct {
 	ViewFuncProvider
-	flashMsg FlashMessenger
 }
 
 // init function - data and process initialization
@@ -23,6 +23,7 @@ func init() {
 	PageData = map[string]interface{}{
 		"PageTitle": conf.Env["project_name"],
 	}
+	flashmsg.CkName = "flashmessenger"
 }
 
 // Render method -
@@ -37,7 +38,7 @@ func (this *LayoutManager) Render(w http.ResponseWriter, r *http.Request, pageDa
 		"ucFirst": this.UCFirst,
 	}).ParseFiles(views...)
 	// include possible flash message
-	pageData["FlashMessage"] = this.flashMsg.Get(w, r)
+	pageData["FlashMessage"], e = flashmsg.Get(w, r)
 	// execute template
 	e = tpl.Execute(w, pageData)
 	if e != nil {
