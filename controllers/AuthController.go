@@ -4,7 +4,6 @@ package controllers
 
 import (
 	. "TheGorgeous/controllers/helpers"
-	. "TheGorgeous/libs/layout"
 	. "TheGorgeous/libs/session"
 	. "TheGorgeous/models"
 	. "TheGorgeous/models/dao"
@@ -15,7 +14,7 @@ import (
 
 // Struct type authController -
 type authController struct {
-	LayoutManager
+	LayoutHelper
 }
 
 // to fill with the flash message values

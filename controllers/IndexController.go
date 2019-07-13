@@ -3,13 +3,13 @@
 package controllers
 
 import (
-	. "TheGorgeous/libs/layout"
+	. "TheGorgeous/controllers/helpers"
 	"net/http"
 )
 
 // Struct type indexController -
 type indexController struct {
-	LayoutManager
+	LayoutHelper
 }
 
 // IndexController function -

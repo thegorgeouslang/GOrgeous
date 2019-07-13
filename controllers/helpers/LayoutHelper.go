@@ -1,11 +1,10 @@
 // Author: James Mallon <jamesmallondev@gmail.com>
 // layout package - package offers functions to deal with templates and layouts
-package layout
+package helpers
 
 import (
 	conf "TheGorgeous/configs"
-	. "TheGorgeous/controllers/helpers"
-	log "TheGorgeous/libs/logger"
+	. "TheGorgeous/libs/logger"
 	. "github.com/thegorgeouslang/VFProvider.git"
 	"html/template"
 	"net/http"
@@ -15,7 +14,7 @@ import (
 var PageData map[string]interface{}
 
 // Struct type layoutHelper - offer DRY solutions to common controllers actions
-type LayoutManager struct {
+type LayoutHelper struct {
 	ViewFuncProvider
 }
 
@@ -27,7 +26,7 @@ func init() {
 }
 
 // Render method -
-func (this *LayoutManager) Render(w http.ResponseWriter, r *http.Request, pageData map[string]interface{}, views ...string) {
+func (this *LayoutHelper) Render(w http.ResponseWriter, r *http.Request, pageData map[string]interface{}, views ...string) {
 	this.concatPath(views)
 
 	tpl, e := template.New("layout").Funcs(template.FuncMap{
@@ -42,12 +41,12 @@ func (this *LayoutManager) Render(w http.ResponseWriter, r *http.Request, pageDa
 	// execute template
 	e = tpl.Execute(w, pageData)
 	if e != nil {
-		log.Write("Error", e.Error(), log.Trace())
+		Logit.WriteLog("error", e.Error(), Logit.GetTraceMsg())
 	}
 }
 
 // concatProjPath method - for testing purposes, adding the absolute path to the templates
-func (this *LayoutManager) concatPath(views []string) []string {
+func (this *LayoutHelper) concatPath(views []string) []string {
 	path := os.Getenv("GOPATH")
 	for k, view := range views {
 		views[k] = path + "/src/" + conf.Env["project_name"] + "/templates/" + view

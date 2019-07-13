@@ -4,7 +4,7 @@ package databases
 
 import (
 	conf "TheGorgeous/configs"
-	log "TheGorgeous/libs/logger"
+	. "TheGorgeous/libs/logger"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -31,7 +31,7 @@ func init() {
 	)
 	db, e := gorm.Open(conf.Env["db_dbms"], uri)
 	if e != nil {
-		log.Write("error", e.Error(), log.Trace())
+		Logit.WriteLog("error", e.Error(), Logit.GetTraceMsg())
 		panic(e)
 	}
 	DbConn = &dbConn{db: db}
@@ -46,7 +46,7 @@ func (this *dbConn) GetConn() *gorm.DB {
 func (this *dbConn) Check() (e error) {
 	if faults := this.db.GetErrors(); len(faults) > 0 {
 		e = faults[0]
-		log.Write("error", e.Error(), log.Trace())
+		Logit.WriteLog("error", e.Error(), Logit.GetTraceMsg())
 	}
 	return
 }

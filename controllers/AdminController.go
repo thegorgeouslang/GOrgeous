@@ -3,7 +3,7 @@
 package controllers
 
 import (
-	. "TheGorgeous/libs/layout"
+	. "TheGorgeous/controllers/helpers"
 	. "TheGorgeous/libs/session"
 	. "TheGorgeous/models/dao"
 	"net/http"
@@ -11,7 +11,7 @@ import (
 
 // Struct type adminController -
 type adminController struct {
-	LayoutManager
+	LayoutHelper
 }
 
 // AdminController function -
