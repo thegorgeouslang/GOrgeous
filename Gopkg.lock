@@ -27,6 +27,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/thegorgeouslang/FlashMessenger.git"
+  packages = ["."]
+  revision = "f380300ea784c10be3db74e60a47aafc93965713"
+
+[[projects]]
+  branch = "master"
   name = "github.com/thegorgeouslang/FormValidator"
   packages = ["."]
   revision = "620c0dbab6ec9e208a92d73e5031b63531f5c07f"
@@ -40,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "23461d92fe5b0a7ecd5702c35d0872013192febbe50b5856144193c0b25af0a6"
+  inputs-digest = "ba176b72f356eb5b46dd66c589792f081f5daac873c6d6ddda29b66929a8d0e0"
   solver-name = "gps-cdcl"
   solver-version = 1

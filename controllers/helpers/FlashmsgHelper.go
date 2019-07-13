@@ -3,7 +3,7 @@
 package helpers
 
 import (
-	. "TheGorgeous/libs/layout"
+	. "github.com/thegorgeouslang/FlashMessenger.git"
 )
 
 var Flashmsg = FlashMessenger{}

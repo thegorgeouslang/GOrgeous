@@ -4,6 +4,7 @@ package layout
 
 import (
 	conf "TheGorgeous/configs"
+	. "TheGorgeous/controllers/helpers"
 	log "TheGorgeous/libs/logger"
 	"html/template"
 	"net/http"
@@ -11,7 +12,6 @@ import (
 )
 
 var PageData map[string]interface{}
-var flashmsg = FlashMessenger{}
 
 // Struct type layoutHelper - offer DRY solutions to common controllers actions
 type LayoutManager struct {
@@ -23,7 +23,6 @@ func init() {
 	PageData = map[string]interface{}{
 		"PageTitle": conf.Env["project_name"],
 	}
-	flashmsg.CkName = "flashmessenger"
 }
 
 // Render method -
@@ -38,7 +37,7 @@ func (this *LayoutManager) Render(w http.ResponseWriter, r *http.Request, pageDa
 		"ucFirst": this.UCFirst,
 	}).ParseFiles(views...)
 	// include possible flash message
-	pageData["FlashMessage"], e = flashmsg.Get(w, r)
+	pageData["FlashMessage"], e = Flashmsg.Get(w, r)
 	// execute template
 	e = tpl.Execute(w, pageData)
 	if e != nil {
