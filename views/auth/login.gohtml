@@ -1,9 +1,16 @@
-{{ define "content" }}
-<h1>Login</h1>
-<br />
-<form method="POST">
-    Email: <input type="text" name="email" autofocus>
-    Password: <input type="password" name="password">
-    <button type="submit">Go!</button>
-</form>
-{{ end }}
+{{define "content"}}
+    <h1>Login</h1>
+    <div>
+        <form method="POST">
+            <div class="form-group">
+                <label for="iEmail">Email</label>
+                <input type="text" name="email" class="form-control" id="iEmail" placeholder="Enter username" autofocus>
+            </div>
+            <div class="form-group">
+                <label for="iPass">Password</label>
+                <input type="password" name="password" class="form-control" id="iPass" value="password1" placeholder="Password">
+            </div>
+            <button type="submit" class="btn btn-primary">Go!</button>
+        </form>
+    </div>
+{{end}}

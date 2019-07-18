@@ -24,7 +24,7 @@ func (this *userDAO) Create(user *User) (e error) {
 	wg.Add(1)
 	go func() {
 		u, _ := this.GetByEmail(user.Email)
-		if len(u.Role) > 0 {
+		if u.ID > 0 {
 			e = errors.New("The user already exists in the database")
 		} else {
 			// it creates a hashed byte slice from the user password
