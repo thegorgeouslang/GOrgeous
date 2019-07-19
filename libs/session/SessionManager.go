@@ -6,7 +6,6 @@ import (
 	conf "TheGorgeous/configs"
 	. "TheGorgeous/libs/logger"
 	. "TheGorgeous/models"
-	. "TheGorgeous/models/dao"
 	"github.com/satori/go.uuid"
 	"net/http"
 	"strconv"
@@ -45,9 +44,10 @@ func (this *sessionManager) GetSession(w http.ResponseWriter, r *http.Request) (
 	if e != nil {
 		return
 	}
-	session, _ := SessionDAO().GetSession(c.Value)
-	if session.Email != "" {
-		SessionDAO().Renew(c.Value)
+	s := Session{}
+	_ = s.GetSession(c.Value)
+	if s.Email != "" {
+		s.Renew(c.Value)
 	}
 	// refresh session
 	c.MaxAge = this.sessExp
@@ -63,10 +63,12 @@ func (this *sessionManager) User(w http.ResponseWriter, r *http.Request) (user U
 		http.SetCookie(w, c)
 
 		// if the user exists already, get user
-		session, _ := SessionDAO().GetSession(c.Value) // retrieve the session
-		if len(session.Email) > 0 {                    // check for the user email
-			SessionDAO().Renew(c.Value)                   // update LastActivity
-			user, _ = UserDAO().GetByEmail(session.Email) // retrieve user
+		s := Session{}
+		_ = s.GetSession(c.Value) // retrieve the session
+		if len(s.Email) > 0 {     // check for the user email
+			s.Renew(c.Value) // update LastActivity
+			user = User{Email: s.Email}
+			_ = user.GetByEmail() // retrieve user
 			return
 		}
 	}

@@ -6,7 +6,6 @@ import (
 	. "TheGorgeous/controllers/helpers"
 	. "TheGorgeous/libs/session"
 	. "TheGorgeous/models"
-	. "TheGorgeous/models/dao"
 	"golang.org/x/crypto/bcrypt"
 	"net/http"
 	"time"
@@ -40,7 +39,7 @@ func (this *authController) Signup(w http.ResponseWriter, r *http.Request) {
 			Password: []byte(r.FormValue("password")),
 			Role:     r.FormValue("role")}
 
-		if e := UserDAO().Create(&user); e != nil { // check if email is unique
+		if e := user.Create(); e != nil { // check if email is unique
 			Flashmsg.Set(&w, fm{"message": e.Error(), "type": "danger"})
 			http.Redirect(w, r, "/signup", http.StatusSeeOther)
 			return
@@ -60,17 +59,12 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 		pass := r.FormValue("password")
 
 		// check user exists and retrieve its password
-		user, _ := UserDAO().GetByEmail(email)
-		if !(len(user.Email) > 0) {
-			Flashmsg.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
-		}
-
+		u := User{Email: email}
+		_ = u.GetByEmail()
 		// compare the password
-		e := bcrypt.CompareHashAndPassword(user.Password, []byte(pass))
+		e := bcrypt.CompareHashAndPassword(u.Password, []byte(pass))
 		if e != nil {
-			Flashmsg.Set(&w, fm{"message": "Username and/or password do not match", "type": "danger"})
+			Flashmsg.Set(&w, fm{"message": "Username and password do not match", "type": "danger"})
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
@@ -78,7 +72,8 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 		// start session and retrieves the session id
 		sid := SessionManager().Start(w, r)
 		// store session
-		SessionDAO().Create(&Session{SID: sid, Email: user.Email, LastActivity: time.Now()})
+		s := Session{SID: sid, Email: u.Email, LastActivity: time.Now()}
+		s.Create()
 
 		// redirect
 		http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
@@ -95,7 +90,7 @@ func (this *authController) Login(w http.ResponseWriter, r *http.Request) {
 func (this *authController) Logout(w http.ResponseWriter, r *http.Request) {
 	sid := SessionManager().Close(w, r)
 	if len(sid) > 0 {
-		SessionDAO().Remove(sid)
+		NewSession().Remove(sid)
 	}
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }

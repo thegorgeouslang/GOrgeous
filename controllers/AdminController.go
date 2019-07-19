@@ -5,7 +5,7 @@ package controllers
 import (
 	. "TheGorgeous/controllers/helpers"
 	. "TheGorgeous/libs/session"
-	. "TheGorgeous/models/dao"
+	. "TheGorgeous/models"
 	"net/http"
 )
 
@@ -31,7 +31,7 @@ func (this *adminController) Dashboard(w http.ResponseWriter, r *http.Request) {
 
 // Index method -
 func (this *adminController) Users(w http.ResponseWriter, r *http.Request) {
-	users, _ := UserDAO().GetUsers()
+	users, _ := NewUser().GetUsers()
 	PageData["PageTitle"] = "Dashboard Users"
 	PageData["Users"] = users
 	this.Render(w, r,

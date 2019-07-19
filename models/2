@@ -1,29 +1,33 @@
-// Sessionor: James Mallon <jamesmallondev@gmail.com>
-// dao package - contain the system's daos
-package dao
+// Author: James Mallon <jamesmallondev@gmail.com>
+// models package - contains the system's models
+package models
 
 import (
 	. "TheGorgeous/libs/databases"
-	//log "TheGorgeous/libs/logger"
-	. "TheGorgeous/models"
+	"github.com/jinzhu/gorm"
 	"sync"
 	"time"
 )
 
-// Struct type sessionDAO -
-type sessionDAO struct{}
+// Struct type Session -
+type Session struct {
+	gorm.Model
+	SID          string
+	Email        string
+	LastActivity time.Time
+}
 
-// SessionDAO function -
-func SessionDAO() *sessionDAO {
-	return &sessionDAO{}
+// NewSession function -
+func NewSession() *Session {
+	return &Session{}
 }
 
 // Insert method -
-func (this *sessionDAO) Create(s *Session) (e error) {
+func (this *Session) Create() (e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		DbConn.GetConn().Create(&s)
+		DbConn.GetConn().Create(&this)
 		e = DbConn.Check() // check for errors
 		defer wg.Done()
 	}()
@@ -32,13 +36,13 @@ func (this *sessionDAO) Create(s *Session) (e error) {
 }
 
 // GetSession method -
-func (this *sessionDAO) GetSession(sid string) (s Session, e error) {
+func (this *Session) GetSession(sid string) (e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		s = Session{SID: sid}
-		DbConn.GetConn().Last(&s) // searching from the last (natural order of insertion)
-		e = DbConn.Check()        // check for errors
+		this.SID = sid
+		DbConn.GetConn().Last(&this) // searching from the last (natural order of insertion)
+		e = DbConn.Check()           // check for errors
 		defer wg.Done()
 	}()
 	wg.Wait()
@@ -46,11 +50,11 @@ func (this *sessionDAO) GetSession(sid string) (s Session, e error) {
 }
 
 // GetSessions method -
-func (this *sessionDAO) GetSessions() (sessions []Session, e error) {
+func (this *Session) GetSessions() (Sessions []Session, e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
-		DbConn.GetConn().Find(&sessions)
+		DbConn.GetConn().Find(&Sessions)
 		e = DbConn.Check() // check for errors
 		defer wg.Done()
 	}()
@@ -59,7 +63,7 @@ func (this *sessionDAO) GetSessions() (sessions []Session, e error) {
 }
 
 // Delete method -
-func (this *sessionDAO) Remove(sid string) (e error) {
+func (this *Session) Remove(sid string) (e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
@@ -73,7 +77,7 @@ func (this *sessionDAO) Remove(sid string) (e error) {
 }
 
 // Renew method -
-func (this *sessionDAO) Renew(sid string) (e error) {
+func (this *Session) Renew(sid string) (e error) {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go func() {
