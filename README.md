@@ -1,4 +1,4 @@
-# TheGorgeous
+# GOrgeous Framework
 
 Project exemplifies the use of Sessions along with Go, Authentication and Authorization along with GORM and postgresql
 
